@@ -8,7 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "lib:build": "ng build login"
+    "lib:build": "ng build login",
+    "lib:package": "cd dist/login && npm pack"
   },
   "private": true,
   "dependencies": {
