@@ -1,13 +1,16 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
 
 @Component({
   selector: 'ca-login',
   template: `
-  <div #content>
-  <ng-content select="[title]"></ng-content>
-  </div>
+  <input type="text" (keydown.enter)="markText($event.target.value)">
+    <div #content [hidden]="true">
+      <ng-content></ng-content>
+    </div>
+  <div [innerHTML]="controlledContent"></div>
   `,
-  styles: [`h1 { font-family: Lato; }`]
+  styles: [`.mark { background-color: yellow; }`],
+  encapsulation: ViewEncapsulation.None
 })
 export class LoginComponent implements OnInit {
 
@@ -20,6 +23,16 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.controlledContent = this.originalContent = this.content.nativeElement.textContent;
+  }
+
+  markText(value: any) {
+    console.log(value);
+    this.controlledContent = this.originalContent;
+    this.controlledContent = this.originalContent.replace(
+      new RegExp(value, 'g'),
+      `<span class="mark">${value}</span>`
+    )
+
   }
 
 }
